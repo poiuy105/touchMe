@@ -84,9 +84,15 @@ class AlarmService : Service() {
                 0
             )
             if (mediaPlayer == null) {
-                // MediaPlayer.create() 返回的已是 prepared 状态，直接 start 即可
-                mediaPlayer = MediaPlayer.create(this, R.raw.alarm)?.apply {
+                // 手动构建 MediaPlayer：stream type 必须在 setDataSource/prepare 之前设置。
+                // 不能用 MediaPlayer.create()——它返回已 prepared 的实例，之后再 setAudioStreamType
+                // 会抛 error(-38) INVALID_OPERATION（这正是之前版本没声音的根因）。
+                val afd = resources.openRawResourceFd(R.raw.alarm)
+                mediaPlayer = MediaPlayer().apply {
                     setAudioStreamType(AudioManager.STREAM_ALARM)
+                    setDataSource(afd.fileDescriptor, afd.startOffset, afd.length)
+                    prepare()
+                    afd.close()
                     isLooping = loopMode
                     setOnCompletionListener {
                         // loopMode=false 时自然结束也视为已停止
