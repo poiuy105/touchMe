@@ -1,0 +1,15 @@
+# Android / Gradle
+*.iml
+.gradle/
+local.properties
+.idea/
+.DS_Store
+build/
+captures/
+.externalNativeBuild/
+.cxx/
+
+# 不要提交 wrapper 二进制（CI 会用 gradle wrapper 生成）
+gradle/wrapper/gradle-wrapper.jar
+gradlew
+gradlew.bat

@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">抓取告警</string>
+
+    <string name="btn_arm">启用悬浮窗（驻留待命）</string>
+    <string name="btn_test_play">模拟告警（测试响铃）</string>
+    <string name="btn_stop">停止</string>
+    <string name="btn_exit">完全退出</string>
+
+    <string name="status_need_permission">需要悬浮窗权限。可点击上方按钮申请，或用 adb 一键授权。</string>
+    <string name="status_permission_ok">悬浮窗权限已授予</string>
+    <string name="status_armed">已驻留待命，悬浮窗已显示。之后可用 adb 触发响铃。</string>
+
+    <string name="float_idle">待命</string>
+    <string name="float_playing">响铃中·点我停</string>
+</resources>

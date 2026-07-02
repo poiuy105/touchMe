@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 悬浮窗待命态：半透明深灰 -->
+    <color name="float_idle">#80424242</color>
+    <!-- 悬浮窗播放态：醒目红 -->
+    <color name="float_playing">#CCFF3B30</color>
+
+    <color name="purple_500">#FF6200EE</color>
+</resources>

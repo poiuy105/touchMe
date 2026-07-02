@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 基于 Material/AppCompat 的简洁主题 -->
+    <style name="Theme.CaptchaAlarm" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="colorPrimary">@color/purple_500</item>
+        <item name="colorPrimaryVariant">@color/purple_500</item>
+        <item name="colorOnPrimary">#FFFFFF</item>
+    </style>
+</resources>
