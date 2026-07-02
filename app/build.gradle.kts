@@ -5,7 +5,9 @@ plugins {
 
 android {
     namespace = "com.helper.captchaalarm"
-    compileSdk = 28
+    // compileSdk 仅影响编译期；targetSdk(=28) 才决定运行时行为(FGS/ scoped storage 限制)。
+    // 提到 33 以满足 androidx 依赖的 minCompileSdk 要求。
+    compileSdk = 33
 
     defaultConfig {
         applicationId = "com.helper.captchaalarm"
