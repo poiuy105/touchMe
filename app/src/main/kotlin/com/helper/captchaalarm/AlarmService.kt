@@ -76,16 +76,17 @@ class AlarmService : Service() {
         }
         try {
             requestAudioFocus()
-            // 用 STREAM_RING（电话铃流），独立于抖音的媒体音量
+            // 用 STREAM_ALARM（闹钟流）：即使手机处于静音/震动模式也会响，
+            // 音量独立于铃声与媒体，最适合"必须引起注意"的告警。
             audioManager.setStreamVolume(
-                AudioManager.STREAM_RING,
-                audioManager.getStreamMaxVolume(AudioManager.STREAM_RING) * 4 / 5,
+                AudioManager.STREAM_ALARM,
+                audioManager.getStreamMaxVolume(AudioManager.STREAM_ALARM) * 4 / 5,
                 0
             )
             if (mediaPlayer == null) {
                 // MediaPlayer.create() 返回的已是 prepared 状态，直接 start 即可
                 mediaPlayer = MediaPlayer.create(this, R.raw.alarm)?.apply {
-                    setAudioStreamType(AudioManager.STREAM_RING)
+                    setAudioStreamType(AudioManager.STREAM_ALARM)
                     isLooping = loopMode
                     setOnCompletionListener {
                         // loopMode=false 时自然结束也视为已停止
@@ -150,7 +151,7 @@ class AlarmService : Service() {
         // MAY_DUCK：其他音源（抖音）降低音量
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val attrs = AudioAttributes.Builder()
-                .setUsage(AudioAttributes.USAGE_NOTIFICATION_RINGTONE)
+                .setUsage(AudioAttributes.USAGE_ALARM)
                 .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
                 .build()
             val req = AudioFocusRequest.Builder(AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK)
@@ -162,7 +163,7 @@ class AlarmService : Service() {
             @Suppress("DEPRECATION")
             audioManager.requestAudioFocus(
                 null,
-                AudioManager.STREAM_RING,
+                AudioManager.STREAM_ALARM,
                 AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK
             )
         }
