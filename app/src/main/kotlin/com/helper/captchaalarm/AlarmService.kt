@@ -89,9 +89,11 @@ class AlarmService : Service() {
                     isLooping = loopMode
                     setOnCompletionListener {
                         // loopMode=false 时自然结束也视为已停止
+                        // 注意：此处位于 MediaPlayer 的 apply 作用域内，isPlaying 须限定到 Service，
+                        // 否则会被解析为 MediaPlayer.isPlaying（只读 val）。
                         if (!loopMode) {
-                            isPlaying = false
-                            overlay?.setState(OverlayManager.State.IDLE)
+                            this@AlarmService.isPlaying = false
+                            this@AlarmService.overlay?.setState(OverlayManager.State.IDLE)
                             Log.i(TAG, "STATE=STOPPED")
                         }
                     }
@@ -191,12 +193,11 @@ class AlarmService : Service() {
     }
 
     private fun buildNotification(): Notification {
-        @Suppress("DEPRECATION")
-        return android.app.NotificationCompat.Builder(this, CHANNEL_ID)
+        return androidx.core.app.NotificationCompat.Builder(this, CHANNEL_ID)
             .setContentTitle(getString(R.string.app_name))
             .setContentText("后台待命")
             .setSmallIcon(android.R.drawable.ic_lock_silent_mode_off)
-            .setPriority(android.app.NotificationCompat.PRIORITY_LOW)
+            .setPriority(androidx.core.app.NotificationCompat.PRIORITY_LOW)
             .setOngoing(true)
             .build()
     }
